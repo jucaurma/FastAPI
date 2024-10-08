@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException, Body
-from typing import Union, Optional
+from fastapi import FastAPI, HTTPException, Body, Form
+from typing import Union, Optional, Annotated
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -71,4 +71,9 @@ async def create_todo(id: int = Body(), description: str = Body(), complete: boo
 async def create_todo(data: Todo):
     TODO_LIST.append(data)
     return data
+
+
+@app.post("/support")
+async def create_support_ticcket(title: Annotated[str, Form()], message: Annotated[str, Form()]):
+    return{"title": title, "message": message}
 
