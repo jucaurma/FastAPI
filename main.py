@@ -5,8 +5,15 @@ from enum import Enum
 class Tags(Enum):
     home: str = "Home"
 
+tags_info = [{
+    "name": "Home",
+    "description": "Test description"
+}]
+
+
 app = FastAPI(
     tittle="TODO API",
+    openapi_tags=tags_info
 )
 
 app.include_router(todo.router)

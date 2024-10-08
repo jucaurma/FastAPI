@@ -4,7 +4,8 @@ from typing import Annotated, Union, Optional
 
 
 router = APIRouter(
-    prefix="/todo"
+    prefix="/todo",
+    tags=["Todo"]
 )
 
 
