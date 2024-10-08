@@ -64,7 +64,10 @@ async def create_todo(id: int = Body(), description: str = Body(), complete: boo
     return TODO_LIST
 
 
-@app.post("/todo2")
+@app.post("/todo2", response_model=Todo, name="Create TODO",
+          summary="Create a TODO element",
+          description="Create a TODO lelement given an id, a description and a complete status",
+          deprecated=False)
 async def create_todo(data: Todo):
     TODO_LIST.append(data)
     return data
