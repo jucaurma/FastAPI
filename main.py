@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Body, Form
+from fastapi import FastAPI, HTTPException, Body, Form, Path, File, UploadFile
 from typing import Union, Optional, Annotated
 from pydantic import BaseModel, Field
 
@@ -76,4 +76,15 @@ async def create_todo(data: Todo):
 @app.post("/support")
 async def create_support_ticcket(title: Annotated[str, Form()], message: Annotated[str, Form()]):
     return{"title": title, "message": message}
+
+
+@app.post("/todo2/{todo_id}/attachment")
+async def upload_todo_file(todo_id: Annotated[int, Path()], file: UploadFile):
+    try:
+        todo_data = next(todo for todo in TODO_LIST if todo["id"] == todo_id )
+        todo_data["file_name"] = file.file
+        file_content = await file.read()
+        return todo_data
+    except:
+        raise HTTPException(status_code=404, detail="TODO no found")
 
